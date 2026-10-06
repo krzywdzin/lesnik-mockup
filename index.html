@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>TV Leśnik — Podgląd aplikacji</title>
+<style>
+  :root{
+    --green:#2E7D32; --green-l:#A5D6A7; --bg:#0E1512; --bg2:#16211B; --text:#E8F5E9; --mut:#7FA98F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
+  body{background:#060907;color:#fff;font-family:-apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;padding:30px;min-height:100vh}
+  h1{color:var(--green);font-size:22px;margin-bottom:6px}
+  .sub{color:var(--mut);color:#7FA98F;font-size:13px;margin-bottom:25px}
+  .screen{width:960px;height:540px;background:var(--bg);border-radius:14px;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(46,125,50,.15);display:none;border:1px solid #1E3328}
+  .screen.active{display:block}
+  /* topbar */
+  .topbar{display:flex;align-items:center;gap:14px;padding:18px 28px}
+  .logo{font-weight:800;font-size:20px;color:var(--green);letter-spacing:.5px}
+  .logo span{color:#A5D6A7}
+  .clock{margin-left:auto;color:#7FA98F;font-size:13px}
+  /* rows */
+  .row{padding:8px 28px}
+  .row-title{color:#7FA98F;font-size:13px;margin:14px 0 8px;font-weight:600}
+  .cards{display:flex;gap:12px;overflow:hidden}
+  .card{min-width:150px;height:96px;border-radius:10px;background:linear-gradient(135deg,#1B2A21,#22332A);display:flex;align-items:flex-end;padding:10px;font-size:13px;color:#CFE8D5;position:relative;border:2px solid transparent}
+  .card.focus{border-color:#A5D6A7;box-shadow:0 0 0 3px rgba(165,214,167,.25);transform:scale(1.04)}
+  .card .emoji{font-size:30px;position:absolute;top:14px;left:12px}
+  .epg{margin-top:26px;padding:0 28px}
+  .epg-row{display:flex;gap:14px;padding:7px 0;border-bottom:1px solid #1B2A22;font-size:13px;color:#B8D4C0}
+  .epg-time{color:#6B8F7A;width:52px;font-variant-numeric:tabular-nums}
+  .epg-now{color:#A5D6A7;font-weight:600}
+  /* activation screen */
+  .act-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:20px}
+  .act-title{font-size:26px;color:#E8F5E9;font-weight:700}
+  .act-sub{color:#7FA98F;font-size:14px;margin-top:-12px}
+  .code{display:flex;gap:12px;margin-top:8px}
+  .code span{width:52px;height:66px;background:#1B2A22;border:2px solid #2E4A3A;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;color:#A5D6A7;font-weight:700;font-family:ui-monospace,monospace}
+  .code .filled{border-color:#4CAF50;background:#1E3D2A;color:#A5D6A7;box-shadow:0 0 18px rgba(76,175,80,.35)}
+  .hint{color:#5E7F6C;font-size:12px;margin-top:26px}
+  /* remote hint */
+  .remote{position:fixed;right:34px;bottom:30px;background:#111A14;border:1px solid #244435;border-radius:12px;padding:14px 18px;color:#7FA98F;font-size:12px;line-height:1.7}
+  .remote b{color:#A5D6A7}
+  /* nav pills */
+  .tabs{display:flex;gap:6px;padding:16px 28px 0}
+  .tab{padding:8px 18px;border-radius:20px;background:#16211B;color:#8FB79E;font-size:13px}
+  .tab.on{background:#2E7D32;color:#fff;font-weight:700}
+  .footer-note{position:fixed;bottom:12px;left:0;right:0;text-align:center;color:#3D5A47;font-size:11px}
+  .vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(76,175,80,.06),transparent 60%);pointer-events:none}
+</style>
+</head>
+<body>
+<h1>📺 TV Leśnik — podgląd interfejsu</h1>
+<div class="sub">Android TV · 1080p · sterowanie pilotem (symulacja: ←→↓↑, Enter, Esc)</div>
+
+<!-- ekran 1: aktywacja -->
+<div class="screen active" id="s-activate">
+  <div class="vignette"></div>
+  <div class="topbar"><div class="logo">TV <span>Leśnik</span></div></div>
+  <div class="act-wrap" style="display:flex;flex-direction:column;align-items:center;height:100%;justify-content:center">
+    <div class="act-title">Aktywacja</div>
+    <div class="act-sub" style="color:#7FA98F;font-size:13px">Wpisz kod z kartki dołączonej do urządzenia</div>
+    <div class="code" style="display:flex;gap:12px;margin-top:30px">
+      <span class="filled">L</span><span class="filled">E</span><span class="filled">S</span><span class="filled">N</span><span>-</span><span class="filled">2</span><span class="filled">0</span><span class="filled">2</span><span class="filled">6</span>
+    </div>
+    <div class="hint" style="color:#4CAF50;margin-top:30px;font-size:14px">✓ Aktywowano — witamy! Twój abonament ważny do 31.12.2026</div>
+  </div>
+</div>
+
+<!-- ekran 2: home -->
+<div class="screen" id="s-home">
+  <div class="vignette"></div>
+  <div class="topbar"><div class="logo">TV <span>Leśnik</span></div><div class="clock">20:38 · wtorek</div></div>
+  <div class="tabs">
+    <div class="tab on">Główne</div><div class="tab">Kanały</div><div class="tab">Filmy</div><div class="tab">Seriale</div>
+  </div>
+  <div class="row"><div class="row-title">Ostatnio oglądane</div>
+    <div class="cards">
+      <div class="card focus" style="position:relative"><div class="emoji">⚽</div>Ekstraklasa: Lech – Legia</div>
+      <div class="card" style="position:relative"><div class="emoji">📺</div>TVP1 HD</div>
+      <div class="card" style="position:relative"><div class="emoji">🎬</div>Film: Psy</div>
+      <div class="card" style="position:relative"><div class="emoji">🎯</div>Polsat Sport</div>
+    </div>
+  </div>
+  <div class="row"><div class="row-title">Kanały na żywo</div>
+    <div class="cards">
+      <div class="card" style="position:relative"><div class="emoji">🌍</div>TVP1 HD</div>
+      <div class="card" style="position:relative"><div class="emoji">🎬</div>TVP2 HD</div>
+      <div class="card" style="position:relative"><div class="emoji">⚽</div>Polsat Sport Premium</div>
+      <div class="card" style="position:relative"><div class="emoji">🎬</div>Canal+ Sport</div>
+    </div>
+  </div>
+  <div class="row"><div class="row-title">Polecane filmy</div>
+    <div class="cards">
+      <div class="card" style="position:relative"><div class="emoji">🎭</div>Filmy PL lektor</div>
+      <div class="card" style="position:relative"><div class="emoji">🎬</div>Nowości 2026</div>
+    </div>
+  </div>
+  <div class="footer-note">Wybierz i naciśnij OK na pilocie · Esc = wstecz</div>
+</div>
+
+<!-- ekran 3: live tv z EPG -->
+<div class="screen" id="s-live">
+  <div class="topbar"><div class="logo">TV <span>Leśnik</span></div><div class="clock">20:38</div></div>
+  <div style="display:flex;gap:0;height:calc(100% - 60px)">
+    <div style="width:200px;background:#101A14;padding:20px 0">
+      <div style="padding:10px 24px;color:#4CAF50;font-weight:600;background:#16281C;border-left:3px solid #4CAF50">Wszystkie</div>
+      <div style="padding:10px 24px;color:#7FA98F">Polska ogólne</div>
+      <div style="padding:10px 24px;color:#7FA98F">Sport</div>
+      <div style="padding:10px 24px;color:#7FA98F">Filmy</div>
+      <div style="padding:10px 24px;color:#7FA98F">Dokumentalne</div>
+      <div style="padding:10px 24px;color:#7FA98F">Dla dzieci</div>
+    </div>
+    <div style="flex:1;padding:20px 24px">
+      <div style="color:#7FA98F;font-size:12px;margin-bottom:12px">Dziś · 20:38</div>
+      <div class="epg-row"><span class="epg-time">20:00</span><span style="color:#E8F5E9">TVP1 HD — Wiadomości</span></div>
+      <div class="epg-row"><span class="epg-time">20:30</span><span style="color:#A5D6A7">▶ Sport: Repas meczu</span></div>
+      <div class="epg-row"><span class="epg-time">21:05</span><span style="color:#7FA98F">Seriale: M jak miłość</span></div>
+      <div class="epg-row"><span class="epg-time">22:00</span><span style="color:#7FA98F">Wiadomości sportowe</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="remote">
+  <b>Sterowanie (pilot):</b><br>
+  ← → ↑ ↓ — nawigacja<br>
+  Enter — wybierz<br>
+  Esc — wstecz<br>
+  A — przełącz ekran (demo)
+</div>
+
+<div class="footer-note">Mockup — TV Leśnik v1.0 · based on OwnTV · tylko wizualizacja</div>
+<button id="nextBtn" style="position:fixed;left:50%;transform:translateX(-50%);bottom:60px;background:#2E7D32;color:#fff;border:none;border-radius:30px;padding:14px 34px;font-size:16px;font-weight:700;box-shadow:0 4px 18px rgba(46,125,50,.4);cursor:pointer;z-index:99">Następny ekran →</button>
+<script>
+document.getElementById('nextBtn').addEventListener('click',()=>{
+  const i=screens.indexOf(document.querySelector('.screen.active').id);
+  show(screens[(i+1)%screens.length]);
+});
+</script>
+
+<script>
+  const screens=['s-activate','s-home','s-live'];
+  function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+  const q=new URLSearchParams(location.search).get('s');
+  if(q&&screens.includes('s-'+q)) show('s-'+q);
+  document.addEventListener('keydown',e=>{
+    if(e.key.toLowerCase()==='a'){
+      const i=screens.indexOf(document.querySelector('.screen.active').id);
+      show(screens[(i+1)%screens.length]);
+    }
+  });
+</script>
+</body>
+</html>
